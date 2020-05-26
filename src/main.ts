@@ -5,6 +5,9 @@ import store from './store';
 import './utils/element.js'
 import './less/style.less'
 
+import VueParticles from 'vue-particles'  
+ 
+Vue.use(VueParticles)
 
 import http from "./utils/https";
 import urls from "./utils/urls";

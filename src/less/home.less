@@ -10,6 +10,11 @@
     background-size: cover;
     z-index: -1;
 }
+.headertop {
+    position: relative;
+    z-index: 5;
+    box-shadow: 0 0 18px #fff;
+}
 .focusinfo {
     position: relative;
     max-width: 800px;
@@ -24,7 +29,7 @@
     -moz-transition: .4s ease all;
     -o-transition: .4s ease all;
     transition: .4s ease all;
-}
+} 
 .header-info {
     width: 60%;
     margin: auto;
@@ -64,11 +69,17 @@
 }
 // 头部
 .header:hover {
-    background: rgba(255, 255, 255, .98);
+    opacity: 1;
+    background: rgba(0, 0, 0, 0.4)!important;
 }
 .noHeader {
     height: 0!important;
     transform: translateY(-70px);
+}
+.yesHeader {
+    opacity: .3;
+    // background: none!important;
+    // color: #333!important;
 }
 .header {
     display: flex;
@@ -77,8 +88,8 @@
     position: fixed;
     -webkit-transition: all .4s ease;
     transition: all .4s ease;
-    background: none;
-    // background: rgba(255, 255, 255, .98);
+    // background: none;
+    background: rgba(0, 0, 0, 0.4);
     box-shadow: 0 0 1px rgba(0,0,0,.15);
     height: 75px;
     top: 0;
@@ -91,7 +102,7 @@
         overflow: hidden;
         margin-top: 17px;
         border-radius: 50%;
-        box-shadow: 0 0 5px #fff;
+        box-shadow: 0 0 5px #868686;
         margin-left: 20px;
         img {
             width: 100%;
@@ -104,11 +115,138 @@
             display: flex;
             .item {
                 cursor: pointer;
-                color: #666;
+                color: #fff;
                 font-size: 15px;
                 padding: 0 20px;
                 font-family: miranafont,"Hiragino Sans GB",STXihei,"Microsoft YaHei",SimSun,sans-serif;
             }
+        }
+    }
+}
+// 内容
+.content {
+    z-index: -2;
+    position: relative;
+    min-height:1000px;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: -2;
+    .posts {
+        position: relative;
+        max-width: 800px;
+        margin: 0 auto;
+
+        // 欢迎光临
+        .notice {
+            padding: 20px 0;
+            border: 1px dashed #868686;
+            border-radius: 20px;
+            font-family: miranafont,"Hiragino Sans GB",STXihei,"Microsoft YaHei",SimSun,sans-serif;
+            color: #E6E6E6;
+            position: relative;
+            display: inline-block;
+            width: 100%;
+            margin-top: 30px;
+            margin-bottom: 50px;
+            // background: #FBFBFB;
+            .notice-content {
+                margin-left: 10px;
+                font-family: miranafont,"Hiragino Sans GB",STXihei,"Microsoft YaHei",SimSun,sans-serif;
+                color: #E6E6E6;
+            }
+        }
+        // background: rgba(255, 255, 255, 0.5);
+        hr {
+            width: 30%;
+            height: 1px;
+            margin: 0 auto;
+            border: 0;
+            background: #868686;
+            margin-top: 20px;
+        }
+        .posts_title {
+            color: #EFEFEF;
+            font-size: 16px;
+            font-weight: 400;
+            padding-bottom: 5px;
+            margin-bottom: 30px;
+            border-bottom: 1px dashed #868686;
+        }
+        .posts_Box {
+            width: 100%;
+            height: 184px;
+            display: flex;
+            justify-content: space-around;
+            .left {
+                width: 100px;
+                height: 100px;
+                border-radius: 50%;
+                border: 1px solid #DADADA;
+                img {
+                    width: 100px;
+                    height: 100px;
+                    border-radius: 50%;
+                }
+            }
+            .right {
+                width: 80%;
+                .topTitle {
+                    display: flex;
+                    justify-content: space-between;
+                    .title {
+                        font-size: 20px;
+                        font-weight: 400;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        white-space: nowrap;
+                        width: 70%;
+                        color: #EFEFEF;
+                        font-family: miranafont,"Hiragino Sans GB",STXihei,"Microsoft YaHei",SimSun,sans-serif;
+                    }
+                    .time {
+                        color: #EFEFEF;
+                        font-size: 12px;
+                        letter-spacing: 0;
+                        font-family: din,'Hiragino Sans GB','Microsoft Yahei',Arial,sans-serif;
+                    }
+                }
+                .bottomTitle {
+                    min-height: 60px;
+                    font-size: 15px;
+                    font-family: miranafont,"Hiragino Sans GB",STXihei,"Microsoft YaHei",SimSun,sans-serif;
+                    color: #EFEFEF;
+                    letter-spacing: 0;
+                    line-height: 30px;
+                    margin-top: 20px;
+                }
+            }
+        }
+    }
+}
+// 底部
+.site-footer {
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2%;
+    z-index: -2;
+    background: rgba(0, 0, 0, 0.3);
+    .footertext {
+        text-align: center;
+        font-size: 13px;
+        font-family: miranafont,"Hiragino Sans GB",STXihei,"Microsoft YaHei",SimSun,sans-serif;
+        p {
+            opacity: .3;
+            color: #EAEADF;
+        }
+    }
+    .footer-device {
+        span {
+            opacity: .3;
+            color: #EAEADF;
         }
     }
 }

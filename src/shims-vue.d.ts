@@ -2,7 +2,7 @@ declare module '*.vue' {
   import Vue from 'vue';
   export default Vue;
 }
-
+declare module 'vue-particles' //已安装的模块名称
 // import VueRouter, { Route } from "vue-router";
 
 // declare module "vue/types/vue" {
