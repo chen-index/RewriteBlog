@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <vue-particles
+    <!-- <vue-particles
       color="#dedede"
       :particleOpacity="0.5"
       :particlesNumber="50"
@@ -17,16 +17,20 @@
       :clickEffect="true"
       clickMode="push"
       class="cash"
-    ></vue-particles>
+    ></vue-particles>-->
     <router-view />
   </div>
 </template>
 
 <style lang="less">
-  .cash {
-    position:fixed;
-    top:0;
-    width:100%;
-    z-index: -1;
-  }
+.cash {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  // z-index: 4;
+}
+::selection {
+  background: #ffffff;
+  color: #333;
+}
 </style>

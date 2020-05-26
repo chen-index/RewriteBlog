@@ -1,5 +1,25 @@
 <template>
   <div>
+    <!-- 动态背景 -->
+    <vue-particles
+      color="#dedede"
+      :particleOpacity="0.5"
+      :particlesNumber="50"
+      shapeType="star"
+      :particleSize="3"
+      linesColor="#FFFFFF"
+      :linesWidth="0.8"
+      :lineLinked="true"
+      :lineOpacity="0.3"
+      :linesDistance="130"
+      :moveSpeed="1"
+      :hoverEffect="true"
+      hoverMode="grab"
+      :clickEffect="true"
+      clickMode="push"
+      class="cash"
+    ></vue-particles>
+    <!-- 头部背景 -->
     <div class="headertop">
       <figure class="centerbg">
         <div class="focusinfo">
@@ -17,7 +37,11 @@
         </div>
       </figure>
     </div>
-    <header class="header" :class="ifHeight === '0' ?  'noHeader' : ( ifHeight === '1' ? '' : 'yesHeader')">
+    <!-- 头部Tab栏 -->
+    <!-- <header
+      class="header"
+      :class="ifHeight === '0' ?  'noHeader' : ( ifHeight === '1' ? '' : 'yesHeader')"
+    >
       <div class="left">
         <img src="@/assets/img/t3-1-150x150.jpg" alt />
       </div>
@@ -33,38 +57,50 @@
           <div class="user"></div>
         </div>
       </div>
-    </header>
+    </header>-->
+    <myHeader :ifHeight="ifHeight"></myHeader>
+    <!-- 内容 -->
     <div class="content">
       <div class="posts">
         <div class="notice">
-          <div class="notice-content">
-            欢迎光临~
+          <div class="notice-content">欢迎光临~</div>
+        </div>
+        <p class="focusing">聚焦</p>
+        <div class="focusing_Box">
+          <div class="item">
+            <div class="foverlay"></div>
+            <div class="text">Gitee</div>
+            <img src="@/assets/img/imgjpg.jpg" alt />
+          </div>
+          <div class="item">
+            <div class="foverlay"></div>
+            <div class="text">感谢光顾</div>
+            <img src="@/assets/img/bg.jpg" alt />
+          </div>
+          <div class="item">
+            <div class="foverlay"></div>
+            <div class="text">我的作品</div>
+            <img src="@/assets/img/temp.jpg" alt />
           </div>
         </div>
         <p class="posts_title">Blog Posts</p>
         <div class="posts_Box">
           <div class="left">
-            <img src="@/assets/img/t2-150x150.jpg" alt="">
+            <img src="@/assets/img/t2-150x150.jpg" alt />
           </div>
           <div class="right">
             <div class="topTitle">
-              <div class="title">SSM整合案例[企业权限管理系统]</div>
+              <div class="title" @click="goArticle">SSM整合案例[企业权限管理系统]</div>
               <div class="time">发布于 2020-04-17</div>
             </div>
-            <div class="bottomTitle">资料：链接：https://pan.baidu.com/s/1NPT0GsOCn93UnfPBPhAjmA   提取码：xiju 视频：链接：https://pan.baidu.com/s/1T1mTpsglJPemZIR5M3Nejg     提取码：...</div>
+            <div
+              class="bottomTitle"
+            >资料：链接：https://pan.baidu.com/s/1NPT0GsOCn93UnfPBPhAjmA 提取码：xiju 视频：链接：https://pan.baidu.com/s/1T1mTpsglJPemZIR5M3Nejg 提取码：...</div>
           </div>
         </div>
-        <hr>
+        <hr />
       </div>
-
-      <div class="site-footer">
-      <div class="footertext">
-        <p>SSSICP备20002009号</p>
-      </div>
-      <div class="footer-device">
-        <span>Copyright © 2017 . All rights reserved. |       </span>
-      </div>
-    </div>
+      <siteFooter></siteFooter>
     </div>
   </div>
 </template>
@@ -72,35 +108,28 @@
 <script lang="ts">
 // @ is an alias to /src
 import "@/less/home.less";
+import myHeader from "@/components/Header.vue";
+import siteFooter from "@/components/siteFooter.vue";
 
 import Vue from "vue";
 import Component from "vue-class-component";
-@Component({})
+@Component({
+  components: {
+    myHeader,
+    siteFooter
+  }
+})
 export default class App extends Vue {
-  msg = 123;
-  i = 0;
-  ifHeight = '1';
+  ifHeight = "2";
+
   mounted() {
-    this.ifHeight = '2'
-    window.addEventListener("scroll", this.handleScroll, true);
+    // this.ifHeight = "2";
+    // window.addEventListener("scroll", this.handleScroll, true);
   }
-  handleScroll() {
-    // 页面滚动距顶部距离
-    let scrollTop =
-      window.pageYOffset ||
-      document.documentElement.scrollTop ||
-      document.body.scrollTop;
-    let scroll = scrollTop - this.i;
-    this.i = scrollTop;
-    console.log(this.i);
-    if (scroll < 0) {
-      this.ifHeight = '1'
-    } else {
-      this.ifHeight = '0'
-    }
-    if (this.i === 0) {
-      this.ifHeight = '2'
-    }
+  // 跳转页面
+  goArticle() {
+    this.$router.push("Article");
   }
+  
 }
 </script>
