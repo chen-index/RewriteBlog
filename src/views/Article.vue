@@ -57,6 +57,7 @@
 import "@/less/article.less";
 import myHeader from "@/components/Header.vue";
 import siteFooter from "@/components/siteFooter.vue";
+import { getArticleDetail } from "@/api/article";
 
 import Vue from "vue";
 import Component from "vue-class-component";
@@ -67,6 +68,8 @@ import Component from "vue-class-component";
   }
 })
 export default class App extends Vue {
+  ArticleDetai = {}; // 文章详情
+  myThis: any = this;
   msg = 123;
   i = 0;
   ifHeight = "";
@@ -74,6 +77,7 @@ export default class App extends Vue {
   distance = 600; //间距
 
   mounted() {
+    this.getArticleDetail()
     let starArr = this.$refs.star;
 
     starArr.forEach((item: any) => {
@@ -84,6 +88,22 @@ export default class App extends Vue {
         360}deg) rotateX(${Math.random() * -50}deg) scale(${speed},${speed})`;
     });
   }
+  // 查询文章详情
+  async getArticleDetail() {
+    const data = {
+      _id: this.$route.query.id
+    }
+    const { data: res } = await getArticleDetail(data)
+    if (res.status !== "200") {
+      return this.myThis.$message({
+        type: "error",
+        message: "获取文章详情失败"
+      });
+    } else {
+      console.log(res);
+      this.ArticleDetai = res.result.article
+    }
+}
   // 跳转页面
   goArticle() {
     this.$router.push("Article");

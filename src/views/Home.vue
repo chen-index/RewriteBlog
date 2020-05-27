@@ -84,13 +84,15 @@
           </div>
         </div>
         <p class="posts_title">Blog Posts</p>
-        <div class="posts_Box">
+        <div style="margin-top: 55px" v-for="(item, i) in ArticleList.article" :key="i">
+            <div class="posts_Box">
           <div class="left">
-            <img src="@/assets/img/t2-150x150.jpg" alt />
+            <el-image style="width: 100%; height: 100%" :src="imgUrl + item.picture" fit="cover"></el-image>
+            <!-- <img :src="imgUrl + item.picture" alt /> -->
           </div>
           <div class="right">
             <div class="topTitle">
-              <div class="title" @click="goArticle">SSM整合案例[企业权限管理系统]</div>
+              <div class="title" @click="goArticle(item._id)">{{item.title}}</div>
               <div class="time">发布于 2020-04-17</div>
             </div>
             <div
@@ -99,6 +101,7 @@
           </div>
         </div>
         <hr />
+        </div>
       </div>
       <siteFooter></siteFooter>
     </div>
@@ -110,6 +113,7 @@
 import "@/less/home.less";
 import myHeader from "@/components/Header.vue";
 import siteFooter from "@/components/siteFooter.vue";
+import { getArticleList } from "@/api/article";
 
 import Vue from "vue";
 import Component from "vue-class-component";
@@ -121,15 +125,40 @@ import Component from "vue-class-component";
 })
 export default class App extends Vue {
   ifHeight = "2";
+  loadForm = {
+    pagenum: 1,
+    pagesize: 5
+  }
+  ArticleList = [];
+  myThis: any = this;
+  imgUrl = "http://120.77.79.140/";
 
   mounted() {
+    this.getArticleList();
     // this.ifHeight = "2";
     // window.addEventListener("scroll", this.handleScroll, true);
   }
   // 跳转页面
-  goArticle() {
-    this.$router.push("Article");
+  async getArticleList() {
+    const data = {
+      pagenum: this.loadForm.pagenum,
+      pagesize: this.loadForm.pagesize
+    };
+    const { data: res } = await getArticleList(data);
+    if (res.status !== "200") {
+      return this.myThis.$message({
+        type: "error",
+        message: "获取评论列表失败"
+      });
+      // return this.Message.error('获取评论列表失败')
+    } else {
+      console.log(res);
+
+      this.ArticleList = res.result;
+    }
   }
-  
+  goArticle(_id:any) {
+    this.$router.push({ name: 'Article', query: { id: _id }});
+  }
 }
 </script>
