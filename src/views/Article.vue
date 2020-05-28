@@ -29,11 +29,13 @@
     </div>
 
     <!-- 内容 -->
+    <!-- 渲染 -->
     <div class="container">
       <div class="contentBox">
-        <div class="title">SSM整合案例[企业权限管理系统]</div>
-        <div class="time">发布于 2020-04-17 106 次阅读</div>
+        <div class="title">{{ArticleDetai.title}}</div>
+        <div class="time">发布于 {{$moment(ArticleDetai.publishDate).format('YYYY-MM-DD HH:mm:ss')}}  无数次阅读</div>
         <hr />
+      <div id="content" class="article-detail" v-html="articleDetail.content"></div>
       </div>
 
       <!-- 头像 -->
@@ -43,9 +45,7 @@
         <div class="info">我们的征途是是星辰大海</div>
       </div>
 
-      <div class="comments">
-        查看评论
-      </div>
+      <div class="comments">查看评论</div>
     </div>
 
     <siteFooter></siteFooter>
@@ -58,6 +58,8 @@ import "@/less/article.less";
 import myHeader from "@/components/Header.vue";
 import siteFooter from "@/components/siteFooter.vue";
 import { getArticleDetail } from "@/api/article";
+
+import markdown from "@/utils/markdown";
 
 import Vue from "vue";
 import Component from "vue-class-component";
@@ -75,9 +77,13 @@ export default class App extends Vue {
   ifHeight = "";
   starsCount = 800; //数量
   distance = 600; //间距
+  articleDetail = {
+    content: '',
+    toc: ''
+  }
 
   mounted() {
-    this.getArticleDetail()
+    this.getArticleDetail();
     let starArr = this.$refs.star;
 
     starArr.forEach((item: any) => {
@@ -92,8 +98,8 @@ export default class App extends Vue {
   async getArticleDetail() {
     const data = {
       _id: this.$route.query.id
-    }
-    const { data: res } = await getArticleDetail(data)
+    };
+    const { data: res } = await getArticleDetail(data);
     if (res.status !== "200") {
       return this.myThis.$message({
         type: "error",
@@ -101,9 +107,15 @@ export default class App extends Vue {
       });
     } else {
       console.log(res);
-      this.ArticleDetai = res.result.article
+      this.ArticleDetai = res.result.article;
+      // 使用 marked 转换
+        const article = markdown.marked(res.result.article.content);
+        article.then((response: any) => {
+          this.articleDetail.content = response.content;
+          this.articleDetail.toc = response.toc;
+        });
     }
-}
+  }
   // 跳转页面
   goArticle() {
     this.$router.push("Article");
@@ -177,5 +189,61 @@ export default class App extends Vue {
       }
     }
   }
+}
+
+/*对 markdown 样式的补充*/
+pre {
+    display: block;
+    padding: 10px;
+    margin: 0 0 10px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #abb2bf;
+    background: #282c34;
+    word-break: break-all;
+    word-wrap: break-word;
+    overflow: auto;
+}
+h1,h2,h3,h4,h5,h6{
+    margin-top: 1em;
+    /* margin-bottom: 1em; */
+}
+strong {
+    font-weight: bold;
+}
+
+p > code:not([class]) {
+    padding: 2px 4px;
+    font-size: 90%;
+    color: #c7254e;
+    background-color: #f9f2f4;
+    border-radius: 4px;
+}
+p img{
+    /* 图片居中 */
+    margin: 0 auto;
+    display: flex;
+}
+
+#content {
+    font-family: "Microsoft YaHei",  'sans-serif';
+    font-size: 16px;
+    line-height: 30px;
+    color: #EFEFEF;
+    max-width: 800px;
+}
+
+#content .desc ul,#content .desc ol {
+    color: #333333;
+    margin: 1.5em 0 0 25px;
+}
+
+#content .desc h1, #content .desc h2 {
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+}
+
+#content .desc a {
+    color: #009a61;
 }
 </style>
